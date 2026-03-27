@@ -3202,7 +3202,7 @@ def get_kiosk_document(
 
 
 # ── TEST ENDPOINT: Skip to IVR consent step ──
-@router.post("/test/ivr-ready")
+@router.get("/test/ivr-ready")
 def test_create_ivr_ready_loan(db: Session = Depends(get_db)):
     """
     Creates a loan pre-filled to the IVR consent step for testing.
