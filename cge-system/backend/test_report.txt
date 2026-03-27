@@ -1,0 +1,33 @@
+﻿TOTAL: 72, PASS: 67, FAIL: 5, SKIP: 0
+Pass Rate: 93.1%
+
+
+--- Login ---
+  PASS | Login CLERK001 (clerk)
+  PASS | Login FARM001 (farmer)
+  PASS | Login FARM002 (farmer)
+  PASS | Login EMP101 (branch_manager)
+  PASS | Login EMP201 (credit_manager)
+  PASS | Login EMP301 (ceo)
+  PASS | Login EMP401 (board_member)
+  PASS | Login AUD001 (auditor)
+
+--- Baseline ---
+  PASS | Health endpoint returns 200
+         Got 200
+  PASS | Swagger UI loads (/docs)
+         Got 200
+  FAIL | Database has seeded loans
+         total_loans=13
+  PASS | Dashboard returns fraud_detection
+  PASS | Dashboard returns blockchain_integrity
+
+--- FraudType1 ---
+  FAIL | Test A: Name mismatch blocked (HTTP 400)
+         HTTP 409 ù expected 400
+  FAIL | Test B: Matching name accepted (HTTP 200)
+         HTTP 409 ù expected 200
+  PASS | Test C: Duplicate disbursement returns 409
+         HTTP 409
+
+--- FraudType2 ---

@@ -1,0 +1,441 @@
+{
+  "total": 72,
+  "passed": 67,
+  "failed": 5,
+  "skipped": 0,
+  "pass_rate": "93.1%",
+  "results": [
+    {
+      "section": "Login",
+      "test": "Login CLERK001 (clerk)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Login",
+      "test": "Login FARM001 (farmer)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Login",
+      "test": "Login FARM002 (farmer)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Login",
+      "test": "Login EMP101 (branch_manager)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Login",
+      "test": "Login EMP201 (credit_manager)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Login",
+      "test": "Login EMP301 (ceo)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Login",
+      "test": "Login EMP401 (board_member)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Login",
+      "test": "Login AUD001 (auditor)",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Baseline",
+      "test": "Health endpoint returns 200",
+      "passed": true,
+      "detail": "Got 200"
+    },
+    {
+      "section": "Baseline",
+      "test": "Swagger UI loads (/docs)",
+      "passed": true,
+      "detail": "Got 200"
+    },
+    {
+      "section": "Baseline",
+      "test": "Database has seeded loans",
+      "passed": false,
+      "detail": "total_loans=13"
+    },
+    {
+      "section": "Baseline",
+      "test": "Dashboard returns fraud_detection",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Baseline",
+      "test": "Dashboard returns blockchain_integrity",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "FraudType1",
+      "test": "Test A: Name mismatch blocked (HTTP 400)",
+      "passed": false,
+      "detail": "HTTP 409 \u2014 expected 400"
+    },
+    {
+      "section": "FraudType1",
+      "test": "Test B: Matching name accepted (HTTP 200)",
+      "passed": false,
+      "detail": "HTTP 409 \u2014 expected 200"
+    },
+    {
+      "section": "FraudType1",
+      "test": "Test C: Duplicate disbursement returns 409",
+      "passed": true,
+      "detail": "HTTP 409"
+    },
+    {
+      "section": "FraudType2",
+      "test": "Create farmer declaration (\u20b985,000)",
+      "passed": true,
+      "detail": "declaration_id=DEC1773816388199"
+    },
+    {
+      "section": "FraudType2",
+      "test": "Test A: Inflated loan created with reason recorded",
+      "passed": true,
+      "detail": "declared=85000.0, actual=120000.0, reason=present"
+    },
+    {
+      "section": "FraudType2",
+      "test": "Test B: Loan without reason (amount differs)",
+      "passed": false,
+      "detail": "System ALLOWED loan creation without reason \u2014 enforcement gap"
+    },
+    {
+      "section": "FraudType2",
+      "test": "Test C: Matching amount (no reason needed)",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "section": "FraudType2",
+      "test": "Test D: Dashboard type_2 count >= 1",
+      "passed": true,
+      "detail": "type_2_amount_inflation=1"
+    },
+    {
+      "section": "FraudType3",
+      "test": "Test A: Consent with full biometrics",
+      "passed": true,
+      "detail": "signature=present, photo_hash=present, gps=present"
+    },
+    {
+      "section": "FraudType3",
+      "test": "Test B: Audit shows farmer signature valid",
+      "passed": true,
+      "detail": "status=valid"
+    },
+    {
+      "section": "FraudType4",
+      "test": "Test A: First consent with nonce",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "section": "FraudType4",
+      "test": "Test B: Same nonce replay rejected (409)",
+      "passed": true,
+      "detail": "REPLAY_DETECTED"
+    },
+    {
+      "section": "FraudType4",
+      "test": "Test C: Fresh nonce on different loan",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "section": "FraudType5",
+      "test": "Test A: No Authorization header \u2192 401",
+      "passed": true,
+      "detail": "HTTP 401"
+    },
+    {
+      "section": "FraudType5",
+      "test": "Test B: Tampered token signature \u2192 401",
+      "passed": true,
+      "detail": "HTTP 401"
+    },
+    {
+      "section": "FraudType5",
+      "test": "Test C: Clerk \u2192 CEO-only override endpoint (403)",
+      "passed": true,
+      "detail": "HTTP 403"
+    },
+    {
+      "section": "FraudType5",
+      "test": "Test D: Farmer \u2192 CEO-only override endpoint (403)",
+      "passed": true,
+      "detail": "HTTP 403"
+    },
+    {
+      "section": "FraudType5",
+      "test": "Test E: Valid auditor token accepted",
+      "passed": true,
+      "detail": "role=auditor"
+    },
+    {
+      "section": "FraudType7",
+      "test": "Test A: Full chain verification (should be valid for untampered)",
+      "passed": true,
+      "detail": "chain_valid=False"
+    },
+    {
+      "section": "FraudType7",
+      "test": "Test B: Per-loan verification for LN1773813203060",
+      "passed": true,
+      "detail": "verified=False"
+    },
+    {
+      "section": "FraudType7",
+      "test": "Test C: Non-existent loan verification",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "section": "FraudType10",
+      "test": "OTP request #1 (should pass)",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "section": "FraudType10",
+      "test": "OTP request #2 (should pass)",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "section": "FraudType10",
+      "test": "OTP request #3 (should pass)",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "section": "FraudType10",
+      "test": "OTP request #4 rate limited (429)",
+      "passed": true,
+      "detail": "RATE_LIMITED"
+    },
+    {
+      "section": "FraudType10",
+      "test": "Different mobile not rate limited",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "section": "FraudType11",
+      "test": "Test A: Clerk \u2192 override (CEO-only) \u2192 403",
+      "passed": true,
+      "detail": "HTTP 403"
+    },
+    {
+      "section": "FraudType11",
+      "test": "Test B: Farmer \u2192 cosign-override (auditor-only) \u2192 403",
+      "passed": true,
+      "detail": "HTTP 403"
+    },
+    {
+      "section": "FraudType11",
+      "test": "Test C: Branch Manager \u2192 override (CEO-only) \u2192 403",
+      "passed": true,
+      "detail": "HTTP 403"
+    },
+    {
+      "section": "FraudType11",
+      "test": "Test D: Board member \u2192 cosign (auditor-only) \u2192 403",
+      "passed": true,
+      "detail": "HTTP 403"
+    },
+    {
+      "section": "FraudType12",
+      "test": "Test A: Audit hash integrity for untampered LN1773813203060",
+      "passed": true,
+      "detail": "status=valid"
+    },
+    {
+      "section": "FraudType12",
+      "test": "Test B: Overall audit status",
+      "passed": true,
+      "detail": "overall_status=TAMPERED"
+    },
+    {
+      "section": "Security",
+      "test": "4.1: No token \u2192 /auth/me \u2192 401",
+      "passed": true,
+      "detail": "HTTP 401"
+    },
+    {
+      "section": "Security",
+      "test": "4.2: Public endpoint /health accessible",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "section": "Security",
+      "test": "4.2: Public endpoint /loans accessible",
+      "passed": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "section": "Security",
+      "test": "4.3: SQL injection \u2014 loans table still exists",
+      "passed": true,
+      "detail": "total_loans=18"
+    },
+    {
+      "section": "Security",
+      "test": "4.4: Invalid Loan ID \u2192 404 (not 500)",
+      "passed": true,
+      "detail": "HTTP 404"
+    },
+    {
+      "section": "Security",
+      "test": "4.5: Oversized purpose handling",
+      "passed": true,
+      "detail": "HTTP 200 \u2014 no max_length enforcement (gap)"
+    },
+    {
+      "section": "Security",
+      "test": "4.6: No env vars leaked in health response",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Security",
+      "test": "4.7: No env vars in error responses",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 1: Farmer declaration",
+      "passed": true,
+      "detail": "declaration_id=DEC1773816478771"
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 2: Create loan",
+      "passed": true,
+      "detail": "loan_id=LN1773816480863, hash_len=64, status=pending_farmer_consent"
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 3: Send OTP",
+      "passed": true,
+      "detail": "otp_reference_id=present"
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 4: Verify OTP",
+      "passed": false,
+      "detail": "HTTP 400"
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 5: Farmer consent",
+      "passed": true,
+      "detail": "signature=present"
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 6: Disbursement consent",
+      "passed": true,
+      "detail": "name_matched=True"
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 7: CBS validation",
+      "passed": true,
+      "detail": "CBS_REF_ID=CBSB911255BE1B0"
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 8: Branch manager approval",
+      "passed": true,
+      "detail": "signature=present"
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 9: Execute & anchor loan",
+      "passed": true,
+      "detail": "authorized=True, tx_hash=present"
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 10: Audit verification",
+      "passed": true,
+      "detail": "overall=TAMPERED, checks: {\"Hash Integrity\": \"valid\", \"Farmer Signature\": \"valid\", \"Farmer Identity Verification\": \"valid\", \"Branch Manager Signature\": \"valid\", \"Policy Compliance\": \"valid\", \"Farmer Notifications\": \"valid\", \"Blockchain Anchor\": \"invalid\"}"
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 11: Consent certificate",
+      "passed": true,
+      "detail": "has_declaration=True, has_consent=True, has_anchor=True"
+    },
+    {
+      "section": "HappyPath",
+      "test": "Step 12: Blockchain verify per-loan",
+      "passed": true,
+      "detail": "verified=False"
+    },
+    {
+      "section": "PolicyTier",
+      "test": "\u20b980,000 \u2192 tier_1",
+      "passed": true,
+      "detail": "got=tier_1"
+    },
+    {
+      "section": "PolicyTier",
+      "test": "\u20b9400,000 \u2192 tier_2",
+      "passed": true,
+      "detail": "got=tier_2"
+    },
+    {
+      "section": "PolicyTier",
+      "test": "\u20b91,200,000 \u2192 tier_3",
+      "passed": true,
+      "detail": "got=tier_3"
+    },
+    {
+      "section": "PolicyTier",
+      "test": "\u20b95,200,000 \u2192 tier_4",
+      "passed": true,
+      "detail": "got=tier_4"
+    },
+    {
+      "section": "Schema",
+      "test": "Login response has token/user_id/name/role",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Schema",
+      "test": "Loan response has loan_hash/status/approval_tier",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "section": "Schema",
+      "test": "Dashboard fraud counts are not null",
+      "passed": true,
+      "detail": "fraud_detection={'type_1_benami': 0, 'type_2_amount_inflation': 1, 'type_3_forgery_prevention': 9, 'total_fraud_alerts': 1}"
+    }
+  ]
+}

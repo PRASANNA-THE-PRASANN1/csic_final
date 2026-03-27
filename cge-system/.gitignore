@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+*.egg
+
+# Environment
+.env
+.env.local
+
+# Node
+node_modules/
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data
+data/keys/*.pem
+data/blockchain/*.json
+blockchain/blockchain_data.json
+backend/google_vision_credentials.json
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage

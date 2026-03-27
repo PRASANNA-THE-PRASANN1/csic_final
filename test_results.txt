@@ -1,0 +1,20 @@
+============================= test session starts =============================
+collecting ... collected 13 items
+
+tests/test_ivr_flow.py::TestTwiMLGeneration::test_twiml_has_gather_elements PASSED [  7%]
+tests/test_ivr_flow.py::TestTwiMLGeneration::test_twiml_uses_hindi_voice PASSED [ 15%]
+tests/test_ivr_flow.py::TestTwiMLGeneration::test_twiml_contains_loan_amount PASSED [ 23%]
+tests/test_ivr_flow.py::TestTwiMLGeneration::test_twiml_has_webhook_url PASSED [ 30%]
+tests/test_ivr_flow.py::TestTwiMLGeneration::test_twiml_is_valid_xml PASSED [ 38%]
+tests/test_ivr_flow.py::TestTwiMLGeneration::test_twiml_has_preamble PASSED [ 46%]
+tests/test_ivr_flow.py::TestTwiMLGeneration::test_twiml_gather_has_single_digit PASSED [ 53%]
+tests/test_ivr_flow.py::TestTwiMLGeneration::test_twiml_three_gather_attempts PASSED [ 61%]
+tests/test_ivr_flow.py::TestIVRTimeout::test_within_window PASSED        [ 69%]
+tests/test_ivr_flow.py::TestIVRTimeout::test_outside_window PASSED       [ 76%]
+tests/test_ivr_flow.py::TestIVRTimeout::test_no_window_started PASSED    [ 84%]
+tests/test_ivr_flow.py::TestIVRTimeout::test_edge_of_window PASSED       [ 92%]
+tests/test_ivr_flow.py::TestIVRTimeout::test_just_past_window PASSED     [100%]
+
+============================= 13 passed in 0.85s ==============================
+
+---STDERR---

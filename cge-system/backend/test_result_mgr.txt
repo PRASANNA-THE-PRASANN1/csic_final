@@ -1,0 +1,121 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.11.5, pytest-7.4.3, pluggy-1.6.0 -- C:\Program Files\Python311\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\PRASANNA SAXENA\Downloads\cisc (2)\cge-system\backend
+plugins: anyio-3.7.1
+collecting ... collected 4 items
+
+tests/test_workflow.py::TestFullCGEWorkflow::test_end_to_end_tier1 ERROR [ 25%]
+tests/test_workflow.py::TestFullCGEWorkflow::test_end_to_end_tier2 ERROR [ 50%]
+tests/test_workflow.py::TestFullCGEWorkflow::test_tamper_detection ERROR [ 75%]
+tests/test_workflow.py::TestFullCGEWorkflow::test_duplicate_approval_rejected ERROR [100%]
+
+=================================== ERRORS ====================================
+_________ ERROR at setup of TestFullCGEWorkflow.test_end_to_end_tier1 _________
+tests\test_workflow.py:30: in setup
+    Base.metadata.create_all(engine)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:5828: in create_all
+    bind._run_ddl_visitor(
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\engine\base.py:3243: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\engine\base.py:2447: in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\visitors.py:671: in traverse_single
+    return meth(obj, **kw)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\ddl.py:897: in visit_metadata
+    collection = sort_tables_and_constraints(
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\ddl.py:1327: in sort_tables_and_constraints
+    dependent_on = fkc.referred_table
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:4751: in referred_table
+    return self.elements[0].column.table
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\util\langhelpers.py:1146: in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:3159: in column
+    return self._resolve_column()
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:3182: in _resolve_column
+    raise exc.NoReferencedTableError(
+E   sqlalchemy.exc.NoReferencedTableError: Foreign key associated with column 'loans.declaration_id' could not find table 'farmer_declarations' with which to generate a foreign key to target column 'declaration_id'
+_________ ERROR at setup of TestFullCGEWorkflow.test_end_to_end_tier2 _________
+tests\test_workflow.py:30: in setup
+    Base.metadata.create_all(engine)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:5828: in create_all
+    bind._run_ddl_visitor(
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\engine\base.py:3243: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\engine\base.py:2447: in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\visitors.py:671: in traverse_single
+    return meth(obj, **kw)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\ddl.py:897: in visit_metadata
+    collection = sort_tables_and_constraints(
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\ddl.py:1327: in sort_tables_and_constraints
+    dependent_on = fkc.referred_table
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:4751: in referred_table
+    return self.elements[0].column.table
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\util\langhelpers.py:1146: in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:3159: in column
+    return self._resolve_column()
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:3182: in _resolve_column
+    raise exc.NoReferencedTableError(
+E   sqlalchemy.exc.NoReferencedTableError: Foreign key associated with column 'loans.declaration_id' could not find table 'farmer_declarations' with which to generate a foreign key to target column 'declaration_id'
+_________ ERROR at setup of TestFullCGEWorkflow.test_tamper_detection _________
+tests\test_workflow.py:30: in setup
+    Base.metadata.create_all(engine)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:5828: in create_all
+    bind._run_ddl_visitor(
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\engine\base.py:3243: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\engine\base.py:2447: in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\visitors.py:671: in traverse_single
+    return meth(obj, **kw)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\ddl.py:897: in visit_metadata
+    collection = sort_tables_and_constraints(
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\ddl.py:1327: in sort_tables_and_constraints
+    dependent_on = fkc.referred_table
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:4751: in referred_table
+    return self.elements[0].column.table
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\util\langhelpers.py:1146: in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:3159: in column
+    return self._resolve_column()
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:3182: in _resolve_column
+    raise exc.NoReferencedTableError(
+E   sqlalchemy.exc.NoReferencedTableError: Foreign key associated with column 'loans.declaration_id' could not find table 'farmer_declarations' with which to generate a foreign key to target column 'declaration_id'
+___ ERROR at setup of TestFullCGEWorkflow.test_duplicate_approval_rejected ____
+tests\test_workflow.py:30: in setup
+    Base.metadata.create_all(engine)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:5828: in create_all
+    bind._run_ddl_visitor(
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\engine\base.py:3243: in _run_ddl_visitor
+    conn._run_ddl_visitor(visitorcallable, element, **kwargs)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\engine\base.py:2447: in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\visitors.py:671: in traverse_single
+    return meth(obj, **kw)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\ddl.py:897: in visit_metadata
+    collection = sort_tables_and_constraints(
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\ddl.py:1327: in sort_tables_and_constraints
+    dependent_on = fkc.referred_table
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:4751: in referred_table
+    return self.elements[0].column.table
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\util\langhelpers.py:1146: in __get__
+    obj.__dict__[self.__name__] = result = self.fget(obj)
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:3159: in column
+    return self._resolve_column()
+..\..\..\..\AppData\Roaming\Python\Python311\site-packages\sqlalchemy\sql\schema.py:3182: in _resolve_column
+    raise exc.NoReferencedTableError(
+E   sqlalchemy.exc.NoReferencedTableError: Foreign key associated with column 'loans.declaration_id' could not find table 'farmer_declarations' with which to generate a foreign key to target column 'declaration_id'
+============================== warnings summary ===============================
+app\db\database.py:37
+  C:\Users\PRASANNA SAXENA\Downloads\cisc (2)\cge-system\backend\app\db\database.py:37: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    Base = declarative_base()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+ERROR tests/test_workflow.py::TestFullCGEWorkflow::test_end_to_end_tier1 - sq...
+ERROR tests/test_workflow.py::TestFullCGEWorkflow::test_end_to_end_tier2 - sq...
+ERROR tests/test_workflow.py::TestFullCGEWorkflow::test_tamper_detection - sq...
+ERROR tests/test_workflow.py::TestFullCGEWorkflow::test_duplicate_approval_rejected
+======================== 1 warning, 4 errors in 2.36s =========================

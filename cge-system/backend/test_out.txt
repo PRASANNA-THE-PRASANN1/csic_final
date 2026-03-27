@@ -1,0 +1,21 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.5, pytest-7.4.3, pluggy-1.6.0 -- C:\Program Files\Python311\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\PRASANNA SAXENA\OneDrive\Desktop\cisc\cge-system\backend
+plugins: anyio-3.7.1
+collecting ... collected 6 items
+
+tests/test_fraud_scenarios.py::TestDatabaseTamperingDetection::test_amount_tampered_after_consent PASSED [ 16%]
+tests/test_fraud_scenarios.py::TestDatabaseTamperingDetection::test_purpose_tampered_after_consent PASSED [ 33%]
+tests/test_fraud_scenarios.py::TestDatabaseTamperingDetection::test_farmer_name_tampered PASSED [ 50%]
+tests/test_fraud_scenarios.py::TestForgedApprovalDetection::test_forged_signature_detected PASSED [ 66%]
+tests/test_fraud_scenarios.py::TestMissingNotificationBlocksExecution::test_no_notifications_blocks_execution PASSED [ 83%]
+tests/test_fraud_scenarios.py::TestMissingNotificationBlocksExecution::test_missing_consent_notification_blocks PASSED [100%]
+
+============================== warnings summary ===============================
+app\db\database.py:23
+  C:\Users\PRASANNA SAXENA\OneDrive\Desktop\cisc\cge-system\backend\app\db\database.py:23: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    Base = declarative_base()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 6 passed, 1 warning in 4.08s =========================

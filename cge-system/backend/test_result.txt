@@ -1,0 +1,54 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.5, pytest-7.4.3, pluggy-1.6.0 -- C:\Program Files\Python311\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\PRASANNA SAXENA\OneDrive\Desktop\cisc\cge-system\backend
+plugins: anyio-3.7.1
+collecting ... collected 6 items
+
+tests/test_fraud_scenarios.py::TestDatabaseTamperingDetection::test_amount_tampered_after_consent PASSED [ 16%]
+tests/test_fraud_scenarios.py::TestDatabaseTamperingDetection::test_purpose_tampered_after_consent PASSED [ 33%]
+tests/test_fraud_scenarios.py::TestDatabaseTamperingDetection::test_farmer_name_tampered PASSED [ 50%]
+tests/test_fraud_scenarios.py::TestForgedApprovalDetection::test_forged_signature_detected FAILED [ 66%]
+tests/test_fraud_scenarios.py::TestMissingNotificationBlocksExecution::test_no_notifications_blocks_execution FAILED [ 83%]
+tests/test_fraud_scenarios.py::TestMissingNotificationBlocksExecution::test_missing_consent_notification_blocks FAILED [100%]
+
+================================== FAILURES ===================================
+_________ TestForgedApprovalDetection.test_forged_signature_detected __________
+tests\test_fraud_scenarios.py:272: in test_forged_signature_detected
+    assert "verification failed" in error.lower() or "signature" in error.lower()
+E   AssertionError: assert ('verification failed' in 'fraud detected: loan parameters have been tampered with. stored hash: 6996ca9f1ca4b6713b7bbf598f0bada3f8ab6212b10898991eb98591cc70825c, recomputed hash: 1d6352a3f527b2db8a25c391083b9304f7caf5b2f9c593c1498a5edd0e84dd11' or 'signature' in 'fraud detected: loan parameters have been tampered with. stored hash: 6996ca9f1ca4b6713b7bbf598f0bada3f8ab6212b10898991eb98591cc70825c, recomputed hash: 1d6352a3f527b2db8a25c391083b9304f7caf5b2f9c593c1498a5edd0e84dd11')
+E    +  where 'fraud detected: loan parameters have been tampered with. stored hash: 6996ca9f1ca4b6713b7bbf598f0bada3f8ab6212b10898991eb98591cc70825c, recomputed hash: 1d6352a3f527b2db8a25c391083b9304f7caf5b2f9c593c1498a5edd0e84dd11' = <built-in method lower of str object at 0x0000016B7C6B9BD0>()
+E    +    where <built-in method lower of str object at 0x0000016B7C6B9BD0> = 'FRAUD DETECTED: Loan parameters have been tampered with. Stored hash: 6996ca9f1ca4b6713b7bbf598f0bada3f8ab6212b10898991eb98591cc70825c, Recomputed hash: 1d6352a3f527b2db8a25c391083b9304f7caf5b2f9c593c1498a5edd0e84dd11'.lower
+E    +  and   'fraud detected: loan parameters have been tampered with. stored hash: 6996ca9f1ca4b6713b7bbf598f0bada3f8ab6212b10898991eb98591cc70825c, recomputed hash: 1d6352a3f527b2db8a25c391083b9304f7caf5b2f9c593c1498a5edd0e84dd11' = <built-in method lower of str object at 0x0000016B7C6B9BD0>()
+E    +    where <built-in method lower of str object at 0x0000016B7C6B9BD0> = 'FRAUD DETECTED: Loan parameters have been tampered with. Stored hash: 6996ca9f1ca4b6713b7bbf598f0bada3f8ab6212b10898991eb98591cc70825c, Recomputed hash: 1d6352a3f527b2db8a25c391083b9304f7caf5b2f9c593c1498a5edd0e84dd11'.lower
+---------------------------- Captured stdout call -----------------------------
+\U0001f4f1 [NOTIFICATION SMS] To: +91-9876543211\n   Content: Loan application created:\nAmount: Rs 300,000\nPurpose: Tractor purchase\nBranch: DCCB Branch\nDate: 17-Mar-2026\nNOT YOU? Call: 1800-XXX-XXXX\nLoan ID: LN_FORGE_001\n   Message ID: MSG_34ABC765\n\U0001f4f1 [NOTIFICATION SMS] To: +91-9876543211\n   Content: Loan consent confirmed\nAmount: Rs 300,000\nMonthly payment: ~Rs 13,568\nDuration: 24 months\nBranch: DCCB Branch\nConsent Date: 17-Mar-2026 03:10 PM\nNOT YOU? Call IMMEDIATELY: 1800-XXX-XXXX\n   Message ID: MSG_46A9A10A
+_ TestMissingNotificationBlocksExecution.test_no_notifications_blocks_execution _
+tests\test_fraud_scenarios.py:293: in test_no_notifications_blocks_execution
+    assert "notification" in error.lower() or "notif" in error.lower()
+E   AssertionError: assert ('notification' in 'fraud detected: loan parameters have been tampered with. stored hash: 0e4f383ee63561bd051cf3d5277fc4d7a546e790e9d711f33938e25d3bce3d14, recomputed hash: 532b65312f7474837060def597c5d4a5147fb2403f0d905ae87abd96805e0fb9' or 'notif' in 'fraud detected: loan parameters have been tampered with. stored hash: 0e4f383ee63561bd051cf3d5277fc4d7a546e790e9d711f33938e25d3bce3d14, recomputed hash: 532b65312f7474837060def597c5d4a5147fb2403f0d905ae87abd96805e0fb9')
+E    +  where 'fraud detected: loan parameters have been tampered with. stored hash: 0e4f383ee63561bd051cf3d5277fc4d7a546e790e9d711f33938e25d3bce3d14, recomputed hash: 532b65312f7474837060def597c5d4a5147fb2403f0d905ae87abd96805e0fb9' = <built-in method lower of str object at 0x0000016B7C6BB330>()
+E    +    where <built-in method lower of str object at 0x0000016B7C6BB330> = 'FRAUD DETECTED: Loan parameters have been tampered with. Stored hash: 0e4f383ee63561bd051cf3d5277fc4d7a546e790e9d711f33938e25d3bce3d14, Recomputed hash: 532b65312f7474837060def597c5d4a5147fb2403f0d905ae87abd96805e0fb9'.lower
+E    +  and   'fraud detected: loan parameters have been tampered with. stored hash: 0e4f383ee63561bd051cf3d5277fc4d7a546e790e9d711f33938e25d3bce3d14, recomputed hash: 532b65312f7474837060def597c5d4a5147fb2403f0d905ae87abd96805e0fb9' = <built-in method lower of str object at 0x0000016B7C6BB330>()
+E    +    where <built-in method lower of str object at 0x0000016B7C6BB330> = 'FRAUD DETECTED: Loan parameters have been tampered with. Stored hash: 0e4f383ee63561bd051cf3d5277fc4d7a546e790e9d711f33938e25d3bce3d14, Recomputed hash: 532b65312f7474837060def597c5d4a5147fb2403f0d905ae87abd96805e0fb9'.lower
+_ TestMissingNotificationBlocksExecution.test_missing_consent_notification_blocks _
+tests\test_fraud_scenarios.py:360: in test_missing_consent_notification_blocks
+    assert "consent_confirmation" in error.lower() or "notification" in error.lower()
+E   AssertionError: assert ('consent_confirmation' in 'fraud detected: loan parameters have been tampered with. stored hash: de18ab201dd2c1aee2f246161d4df02ce1d6fe35be6c6eb2a39d69881827344e, recomputed hash: dbcffc460da2d933f2c61d1fa01e4cc7db43ef292e4f01ef3d0bb2959b50faf2' or 'notification' in 'fraud detected: loan parameters have been tampered with. stored hash: de18ab201dd2c1aee2f246161d4df02ce1d6fe35be6c6eb2a39d69881827344e, recomputed hash: dbcffc460da2d933f2c61d1fa01e4cc7db43ef292e4f01ef3d0bb2959b50faf2')
+E    +  where 'fraud detected: loan parameters have been tampered with. stored hash: de18ab201dd2c1aee2f246161d4df02ce1d6fe35be6c6eb2a39d69881827344e, recomputed hash: dbcffc460da2d933f2c61d1fa01e4cc7db43ef292e4f01ef3d0bb2959b50faf2' = <built-in method lower of str object at 0x0000016B7C6BB330>()
+E    +    where <built-in method lower of str object at 0x0000016B7C6BB330> = 'FRAUD DETECTED: Loan parameters have been tampered with. Stored hash: de18ab201dd2c1aee2f246161d4df02ce1d6fe35be6c6eb2a39d69881827344e, Recomputed hash: dbcffc460da2d933f2c61d1fa01e4cc7db43ef292e4f01ef3d0bb2959b50faf2'.lower
+E    +  and   'fraud detected: loan parameters have been tampered with. stored hash: de18ab201dd2c1aee2f246161d4df02ce1d6fe35be6c6eb2a39d69881827344e, recomputed hash: dbcffc460da2d933f2c61d1fa01e4cc7db43ef292e4f01ef3d0bb2959b50faf2' = <built-in method lower of str object at 0x0000016B7C6BB330>()
+E    +    where <built-in method lower of str object at 0x0000016B7C6BB330> = 'FRAUD DETECTED: Loan parameters have been tampered with. Stored hash: de18ab201dd2c1aee2f246161d4df02ce1d6fe35be6c6eb2a39d69881827344e, Recomputed hash: dbcffc460da2d933f2c61d1fa01e4cc7db43ef292e4f01ef3d0bb2959b50faf2'.lower
+---------------------------- Captured stdout call -----------------------------
+\U0001f4f1 [NOTIFICATION SMS] To: +91-9876543212\n   Content: Loan application created:\nAmount: Rs 50,000\nPurpose: Seeds\nBranch: DCCB Branch\nDate: 17-Mar-2026\nNOT YOU? Call: 1800-XXX-XXXX\nLoan ID: LN_NOTIF_002\n   Message ID: MSG_E067DD5D
+============================== warnings summary ===============================
+app\db\database.py:36
+  C:\Users\PRASANNA SAXENA\OneDrive\Desktop\cisc\cge-system\backend\app\db\database.py:36: MovedIn20Warning: The ``declarative_base()`` function is now available as sqlalchemy.orm.declarative_base(). (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    Base = declarative_base()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_fraud_scenarios.py::TestForgedApprovalDetection::test_forged_signature_detected
+FAILED tests/test_fraud_scenarios.py::TestMissingNotificationBlocksExecution::test_no_notifications_blocks_execution
+FAILED tests/test_fraud_scenarios.py::TestMissingNotificationBlocksExecution::test_missing_consent_notification_blocks
+=================== 3 failed, 3 passed, 1 warning in 1.71s ====================

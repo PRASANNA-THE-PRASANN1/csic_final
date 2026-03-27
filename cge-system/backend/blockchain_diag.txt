@@ -1,0 +1,55 @@
+Block #10:
+  tx_hash:      9449660959f0a2b91a07f09853b849382d77290ebe2dd44663598ef5375ad6da
+  consent_hash: 1a916683265e804a98d708006987625aa71d27b2c9966e4333309b36c1a1000d
+  anchored_at:  [2026-03-24 18:00:17.180508]
+  resp_ts:      [2026-03-24T18:00:17.180508+00:00]
+
+Block #11:
+  tx_hash:      fe0d3535cefd8092864a1e5034d52f039f08f30d991c04ffd559acfbb9ab5607
+  consent_hash: f08a5d825b1bb3b3b0a5c56c9214b6d0447d1371a1e09199c33ff9c9a90006b6
+  anchored_at:  [2026-03-25 17:18:41.785212]
+  resp_ts:      [2026-03-25T17:18:41.785212+00:00]
+
+=== VERIFICATION (block 11) ===
+Prev hash:         9449660959f0a2b91a07f09853b849382d77290ebe2dd44663598ef5375ad6da
+Raw DB timestamp:  [2026-03-25 17:18:41.785212]
+Recomputed hash:   7a74447300a2221994b018fd2aabf681977b286aa25b69eaf987a8333cb6068e
+Stored tx_hash:    fe0d3535cefd8092864a1e5034d52f039f08f30d991c04ffd559acfbb9ab5607
+Match (raw):       False
+
+Response timestamp: [2026-03-25T17:18:41.785212+00:00]
+Recomputed hash:    fe0d3535cefd8092864a1e5034d52f039f08f30d991c04ffd559acfbb9ab5607
+Match (resp):       True
+
+With UTC tz:     [2026-03-25T17:18:41.785212+00:00]
+Recomputed:      fe0d3535cefd8092864a1e5034d52f039f08f30d991c04ffd559acfbb9ab5607
+Match (utc):     True
+
+=== FULL CHAIN VERIFICATION ===
+BREAK at block #1 (loan=LN1700000020000)
+  ts: [2026-03-13 09:40:44.763733]
+BREAK at block #2 (loan=LN1700000021000)
+  ts: [2026-03-14 09:40:44.763733]
+BREAK at block #3 (loan=LN1700000022000)
+  ts: [2026-03-15 09:40:44.763733]
+BREAK at block #4 (loan=LN1700000023000)
+  ts: [2026-03-16 09:40:44.763733]
+BREAK at block #5 (loan=LN1700000024000)
+  ts: [2026-03-17 09:40:44.763733]
+BREAK at block #6 (loan=LN1774249310804)
+  ts: [2026-03-23 07:04:59.151872]
+BREAK at block #7 (loan=LN1774259174939)
+  ts: [2026-03-23 09:48:34.416138]
+BREAK at block #8 (loan=LN1774261399227)
+  ts: [2026-03-23 10:27:09.840694]
+BREAK at block #9 (loan=LN1774332757894)
+  ts: [2026-03-24 06:19:39.490330]
+BREAK at block #10 (loan=LN1774375018711)
+  ts: [2026-03-24 18:00:17.180508]
+BREAK at block #11 (loan=LN1774458779767)
+  ts: [2026-03-25 17:18:41.785212]
+BREAK at block #12 (loan=LN1774478096037)
+  ts: [2026-03-25 22:43:05.513363]
+BREAK at block #13 (loan=LN1774478597515)
+  ts: [2026-03-25 22:50:05.207509]
+Total blocks: 13, broken: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]

@@ -1,0 +1,8 @@
+=== FARMER DECLARATION ===
+Status: 200
+Declaration ID: DEC1771028919338
+Amount: 200000.0
+
+=== CREATE LOAN ===
+Status: 500
+Error: Internal Server Error
