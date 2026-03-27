@@ -19,7 +19,7 @@ TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "")
 TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER", "")
 
-IVR_WINDOW_SECONDS = 60
+IVR_WINDOW_SECONDS = 300  # 5 minutes — allows time for Twilio connect + Hindi prompt + farmer input
 
 
 class IVRService:

@@ -32,20 +32,20 @@ export default function KioskConsentConfirm() {
     const [phase, setPhase] = useState('summary');
     const [loading, setLoading] = useState(false);
 
-    const [ivrCountdown, setIvrCountdown] = useState(60);
+    const [ivrCountdown, setIvrCountdown] = useState(300);
     const [ivrMethod, setIvrMethod] = useState('call'); // 'call' or 'sms'
     const ivrTimerRef = useRef(null);
     const pollRef = useRef(null);
     const completingRef = useRef(false);
 
-    // 60-second IVR countdown timer
+    // Local countdown timer (visual only — server poll is source of truth for timeout)
     useEffect(() => {
         if (phase === 'ivr') {
             ivrTimerRef.current = setInterval(() => {
                 setIvrCountdown(prev => {
                     if (prev <= 1) {
                         clearInterval(ivrTimerRef.current);
-                        setPhase('timed_out');
+                        // Do NOT set timed_out here — let the server poll decide
                         return 0;
                     }
                     return prev - 1;
@@ -166,7 +166,7 @@ export default function KioskConsentConfirm() {
             dispatch({ type: 'SET_CONSENT_COMPLETE' });
 
             if (data.ivr_initiated) {
-                setIvrCountdown(60);
+                setIvrCountdown(300);
                 setIvrMethod('call');
                 setPhase('ivr');
             } else {
@@ -188,7 +188,7 @@ export default function KioskConsentConfirm() {
         : 0;
 
     // IVR countdown circle
-    const ivrCircleDash = (ivrCountdown / 60) * 339.3;
+    const ivrCircleDash = (ivrCountdown / 300) * 339.3;
 
     return (
         <div className="kiosk-step kiosk-consent">
