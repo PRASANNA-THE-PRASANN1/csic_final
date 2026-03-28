@@ -266,6 +266,28 @@ export default function KioskConsentConfirm() {
                         </span>
                     </div>
 
+                    <div style={{
+                        background: 'linear-gradient(135deg, #fff8e1, #fff3cd)',
+                        border: '1px solid #ffc107',
+                        borderRadius: '12px',
+                        padding: '16px 20px',
+                        margin: '12px 0 20px',
+                        fontSize: '0.88rem',
+                        lineHeight: 1.6,
+                        color: '#6d4c00',
+                    }}>
+                        <div style={{ fontWeight: 700, marginBottom: '6px', fontSize: '0.95rem' }}>
+                            ⚠️ Demo Limitation
+                        </div>
+                        <div>
+                            This kiosk currently supports calling only one phone number as it uses a Twilio trial account.
+                        </div>
+                        <div style={{ marginTop: '8px', opacity: 0.85 }}>
+                            For the production system, we will implement a secure, scalable, and fully controlled
+                            communication infrastructure instead of relying on third-party international services.
+                        </div>
+                    </div>
+
                     <button
                         className="btn-kiosk-primary"
                         onClick={handleInitiateIVR}

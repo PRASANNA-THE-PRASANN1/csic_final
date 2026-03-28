@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AgriSlideshow from '../components/AgriSlideshow';
 
 export default function EmployeeLandingPage() {
     const navigate = useNavigate();
+    const [showHelpVideo, setShowHelpVideo] = useState(false);
 
     return (
         <>
@@ -54,6 +55,103 @@ export default function EmployeeLandingPage() {
                     <span className="badge badge-green">🌾 Farmer First</span>
                 </div>
             </div>
+
+            {/* Floating Help Video Button */}
+            <button
+                onClick={() => setShowHelpVideo(true)}
+                style={{
+                    position: 'fixed',
+                    bottom: '28px',
+                    right: '28px',
+                    zIndex: 9000,
+                    background: 'linear-gradient(135deg, #1565c0, #1e88e5)',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '50px',
+                    padding: '14px 24px',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 20px rgba(21,101,192,0.4)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    transition: 'transform 0.2s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                title="Watch help video"
+            >
+                <span style={{ fontSize: '1.3rem' }}>🎬</span>
+                Help Demo
+            </button>
+
+            {/* Help Video Modal */}
+            {showHelpVideo && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        zIndex: 10000,
+                        background: 'rgba(0,0,0,0.8)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                    onClick={() => setShowHelpVideo(false)}
+                >
+                    <div
+                        style={{
+                            background: '#111',
+                            borderRadius: '16px',
+                            padding: '12px',
+                            maxWidth: '90vw',
+                            maxHeight: '90vh',
+                            position: 'relative',
+                        }}
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <button
+                            onClick={() => setShowHelpVideo(false)}
+                            style={{
+                                position: 'absolute',
+                                top: '-12px',
+                                right: '-12px',
+                                background: '#e53935',
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '50%',
+                                width: '36px',
+                                height: '36px',
+                                fontSize: '1.2rem',
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                                zIndex: 10001,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                            }}
+                        >
+                            ✕
+                        </button>
+                        <video
+                            src="/EMPLOYEE_SIDE_DEMO_HELP.mp4"
+                            controls
+                            autoPlay
+                            style={{
+                                maxWidth: '85vw',
+                                maxHeight: '80vh',
+                                borderRadius: '12px',
+                                display: 'block',
+                            }}
+                        />
+                    </div>
+                </div>
+            )}
         </>
     );
 }

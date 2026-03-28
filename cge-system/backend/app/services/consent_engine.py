@@ -338,16 +338,22 @@ class ConsentEngine:
                     "message": "Document OCR confirmation not completed in kiosk session"
                 }))
             # Check 0d: ConsentOTPRecord of type loan_consent with used = true
-            consent_otp = db.query(ConsentOTPRecord).filter(
-                ConsentOTPRecord.loan_id == loan_id,
-                ConsentOTPRecord.otp_type == "loan_consent",
-                ConsentOTPRecord.used == True,
-            ).first()
-            if not consent_otp:
-                return (False, None, json.dumps({
-                    "error_code": "KIOSK_SESSION_INCOMPLETE",
-                    "message": "Consent OTP not verified in kiosk session"
-                }))
+            # Skip this check for IVR-confirmed loans — IVR voice consent replaces OTP consent
+            if loan.ivr_status == "confirmed":
+                logger.info(
+                    f"Skipping consent OTP check for IVR-confirmed loan {loan_id}"
+                )
+            else:
+                consent_otp = db.query(ConsentOTPRecord).filter(
+                    ConsentOTPRecord.loan_id == loan_id,
+                    ConsentOTPRecord.otp_type == "loan_consent",
+                    ConsentOTPRecord.used == True,
+                ).first()
+                if not consent_otp:
+                    return (False, None, json.dumps({
+                        "error_code": "KIOSK_SESSION_INCOMPLETE",
+                        "message": "Consent OTP not verified in kiosk session"
+                    }))
             # Check 0e: kiosk_phase_anchor_hash is not null on loan
             if not loan.kiosk_phase_anchor_hash:
                 return (False, None, json.dumps({
