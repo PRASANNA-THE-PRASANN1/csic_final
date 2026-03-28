@@ -1086,60 +1086,67 @@ def execute_loan(
     notification: NotificationService = Depends(get_notification_service),
 ):
     """Validate and execute a loan, anchoring proof on blockchain."""
-    is_eligible, final_token, error = consent_engine.validate_execution_eligibility(
-        db, loan_id
-    )
-
-    if not is_eligible:
-        raise HTTPException(status_code=400, detail=error)
-
-    # Update loan status
-    loan = db.query(Loan).filter(Loan.loan_id == loan_id).first()
-    loan.status = "executed"
-    loan.updated_at = datetime.now(timezone.utc)
-    db.commit()
-
-    # Anchor on blockchain (database-backed chain)
-    anchor = blockchain.anchor_consent(db, loan_id, final_token)
-
-    loan.status = "anchored"
-    loan.updated_at = datetime.now(timezone.utc)
-    db.commit()
-
-    # Send disbursement SMS notification to farmer
-    disbursement_notif = None
     try:
-        disbursement = db.query(DisbursementConsent).filter(
-            DisbursementConsent.loan_id == loan_id
-        ).first()
-        farmer_mobile = loan.farmer_mobile or "0000000000"
-        account_number = disbursement.account_number if disbursement else "XXXXXXXX"
-
-        disbursement_notif = notification.send_disbursement_notification(
-            db=db,
-            farmer_mobile=farmer_mobile,
-            loan_id=loan_id,
-            account_number=account_number,
-            amount=loan.amount,
+        is_eligible, final_token, error = consent_engine.validate_execution_eligibility(
+            db, loan_id
         )
-    except Exception as e:
-        print(f"⚠ Disbursement notification failed: {e}")
 
-    return {
-        "execution_authorized": True,
-        "loan_id": loan_id,
-        "final_consent_token": final_token,
-        "blockchain_anchor": {
-            "block_number": anchor.block_number,
-            "transaction_hash": anchor.transaction_hash,
-            "consent_hash": anchor.consent_hash,
-            "anchored_at": anchor.anchored_at.isoformat() if anchor.anchored_at else None,
-        },
-        "disbursement_notification": {
-            "sent": disbursement_notif is not None,
-            "delivery_status": disbursement_notif.delivery_status if disbursement_notif else None,
-        },
-    }
+        if not is_eligible:
+            raise HTTPException(status_code=400, detail=error)
+
+        # Update loan status
+        loan = db.query(Loan).filter(Loan.loan_id == loan_id).first()
+        loan.status = "executed"
+        loan.updated_at = datetime.now(timezone.utc)
+        db.commit()
+
+        # Anchor on blockchain (database-backed chain)
+        anchor = blockchain.anchor_consent(db, loan_id, final_token)
+
+        loan.status = "anchored"
+        loan.updated_at = datetime.now(timezone.utc)
+        db.commit()
+
+        # Send disbursement SMS notification to farmer
+        disbursement_notif = None
+        try:
+            disbursement = db.query(DisbursementConsent).filter(
+                DisbursementConsent.loan_id == loan_id
+            ).first()
+            farmer_mobile = loan.farmer_mobile or "0000000000"
+            account_number = disbursement.account_number if disbursement else "XXXXXXXX"
+
+            disbursement_notif = notification.send_disbursement_notification(
+                db=db,
+                farmer_mobile=farmer_mobile,
+                loan_id=loan_id,
+                account_number=account_number,
+                amount=loan.amount,
+            )
+        except Exception as e:
+            print(f"⚠ Disbursement notification failed: {e}")
+
+        return {
+            "execution_authorized": True,
+            "loan_id": loan_id,
+            "final_consent_token": final_token,
+            "blockchain_anchor": {
+                "block_number": anchor.block_number,
+                "transaction_hash": anchor.transaction_hash,
+                "consent_hash": anchor.consent_hash,
+                "anchored_at": anchor.anchored_at.isoformat() if anchor.anchored_at else None,
+            },
+            "disbursement_notification": {
+                "sent": disbursement_notif is not None,
+                "delivery_status": disbursement_notif.delivery_status if disbursement_notif else None,
+            },
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Execution error: {str(e)}")
 
 
 # ══════════════════════════════════════════════════════════════════════

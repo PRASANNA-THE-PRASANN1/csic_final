@@ -50,7 +50,9 @@ export default function AuditPage() {
             const auditRes = await auditLoan(loanId.trim());
             setReport(auditRes.data);
         } catch (err) {
-            setError(err.response?.data?.detail || 'Execution failed');
+            const detail = err.response?.data?.detail;
+            const msg = typeof detail === 'object' ? (detail.message || JSON.stringify(detail)) : (detail || 'Execution failed');
+            setError(msg);
         } finally {
             setExecuting(false);
         }
