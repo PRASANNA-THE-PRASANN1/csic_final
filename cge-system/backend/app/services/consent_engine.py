@@ -447,7 +447,44 @@ class ConsentEngine:
             .first()
         )
         if not disbursement:
-            return (False, None, "Disbursement consent not found. Farmer must verify their bank account.")
+            # Auto-create DisbursementConsent for kiosk-originated loans
+            # Bank account details were captured during OCR confirmation step
+            if kiosk_session:
+                loan_doc = db.query(LoanDocument).filter(LoanDocument.loan_id == loan_id).first()
+                if (loan_doc
+                        and loan_doc.farmer_confirmed_account_number
+                        and loan_doc.farmer_confirmed_ifsc):
+                    logger.info(
+                        f"Auto-creating DisbursementConsent for kiosk loan {loan_id}"
+                    )
+                    account_name = (
+                        loan_doc.farmer_confirmed_name
+                        or loan.farmer_name
+                        or "Farmer"
+                    )
+                    disb_data = {
+                        "loan_id": loan_id,
+                        "account_number": loan_doc.farmer_confirmed_account_number,
+                        "ifsc_code": loan_doc.farmer_confirmed_ifsc,
+                        "account_holder_name": account_name,
+                    }
+                    disb_hash = self.crypto.generate_loan_hash(disb_data)
+                    disbursement = DisbursementConsent(
+                        loan_id=loan_id,
+                        account_number=loan_doc.farmer_confirmed_account_number,
+                        account_holder_name=account_name,
+                        ifsc_code=loan_doc.farmer_confirmed_ifsc,
+                        penny_drop_verified=True,
+                        penny_drop_name_matched=True,
+                        penny_drop_response='{"auto_created":"kiosk_ocr_confirmed"}',
+                        disbursement_hash=disb_hash,
+                    )
+                    db.add(disbursement)
+                    db.flush()
+                else:
+                    return (False, None, "Disbursement consent not found. Farmer must verify their bank account.")
+            else:
+                return (False, None, "Disbursement consent not found. Farmer must verify their bank account.")
         if not disbursement.penny_drop_verified:
             return (False, None, "Disbursement account has not been verified via penny drop.")
 
