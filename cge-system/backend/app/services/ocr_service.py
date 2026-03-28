@@ -50,19 +50,19 @@ def _get_paddle_ocr():
         # PaddleOCR 2.x requires use_gpu=False for CPU.
         param_sets = [
             # PaddleOCR 3.x — no use_gpu, show_log, or det_db_thresh
-            dict(lang='hi'),
+            dict(lang='hi', enable_mkldnn=False),
             # PaddleOCR 3.x — English only
-            dict(lang='en'),
+            dict(lang='en', enable_mkldnn=False),
             # PaddleOCR 2.7+ — with show_log
             dict(use_angle_cls=True, lang='hi', use_gpu=False, show_log=False,
-                 det_db_thresh=0.3, rec_batch_num=6),
+                 det_db_thresh=0.3, rec_batch_num=6, enable_mkldnn=False),
             # PaddleOCR 2.x — no show_log
             dict(use_angle_cls=True, lang='hi', use_gpu=False,
-                 det_db_thresh=0.3, rec_batch_num=6),
+                 det_db_thresh=0.3, rec_batch_num=6, enable_mkldnn=False),
             # Minimal PaddleOCR 2.x
-            dict(lang='hi', use_gpu=False),
+            dict(lang='hi', use_gpu=False, enable_mkldnn=False),
             # Fallback: English-only (2.x)
-            dict(lang='en', use_gpu=False),
+            dict(lang='en', use_gpu=False, enable_mkldnn=False),
         ]
 
         for i, params in enumerate(param_sets):

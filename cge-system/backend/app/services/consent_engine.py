@@ -176,7 +176,42 @@ class ConsentEngine:
             .first()
         )
         if not consent:
-            raise ValueError(f"No farmer consent found for loan {loan.loan_id}")
+            # Auto-create FarmerConsent for IVR-confirmed kiosk loans
+            if loan.ivr_status == "confirmed":
+                logger.info(
+                    f"Auto-creating FarmerConsent for IVR-confirmed loan {loan.loan_id}"
+                )
+                loan_hash = loan.loan_hash
+                key_id = f"farmer_{loan.farmer_id}"
+                farmer_signature = self.crypto.sign_data(loan_hash, key_id)
+                consent_token = self.crypto.generate_consent_token(
+                    loan_hash=loan_hash,
+                    farmer_signature=farmer_signature,
+                    consent_method="ivr_voice",
+                    metadata={
+                        "auto_created": True,
+                        "ivr_confirmed_at": loan.ivr_confirmed_at.isoformat()
+                        if loan.ivr_confirmed_at else None,
+                        "consent_final_method": loan.consent_final_method,
+                    },
+                )
+                consent = FarmerConsent(
+                    loan_id=loan.loan_id,
+                    loan_hash=loan_hash,
+                    farmer_signature=farmer_signature,
+                    consent_method="ivr_voice",
+                    otp_verified="IVR",
+                    ip_address="kiosk",
+                    consent_token=consent_token,
+                    bank_kyc_verified=False,
+                )
+                # Use ivr_confirmed_at as consent time if available
+                if loan.ivr_confirmed_at:
+                    consent.consented_at = loan.ivr_confirmed_at
+                db.add(consent)
+                db.flush()
+            else:
+                raise ValueError(f"No farmer consent found for loan {loan.loan_id}")
 
         # Verify role is required for this tier
         if not self.policy.is_role_required(loan.amount, approver_role):

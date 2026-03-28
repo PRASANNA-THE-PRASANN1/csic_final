@@ -93,6 +93,8 @@ def init_db():
         ("loans", "clerk_review_opened_at", "DATETIME"),
         ("kiosk_sessions", "assisting_employee_name", "VARCHAR(255)"),
         ("kiosk_sessions", "assisting_employee_id", "VARCHAR(100)"),
+        ("loan_documents", "farmer_confirmed_name", "VARCHAR(255)"),
+        ("loans", "consent_given_at", "DATETIME"),
     ]
     for table, column, col_type in _columns_to_add:
         try:

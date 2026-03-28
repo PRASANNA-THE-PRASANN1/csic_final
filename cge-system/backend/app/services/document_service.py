@@ -437,13 +437,16 @@ class DocumentService:
                 loan_doc.farmer_confirmed_land_ownership = str(confirmed_extras["land_ownership"])
             if confirmed_extras.get("loan_reason"):
                 loan_doc.farmer_confirmed_loan_reason = str(confirmed_extras["loan_reason"])
+            if confirmed_extras.get("confirmed_name"):
+                loan_doc.farmer_confirmed_name = str(confirmed_extras["confirmed_name"])
 
         # Update loan with confirmed values
         loan = db.query(Loan).filter(Loan.loan_id == loan_id).first()
         if loan:
-            # Populate farmer name: prefer OCR-extracted name from the document
-            # (the actual name the farmer wrote), fall back to Aadhaar only if OCR is empty
-            if loan_doc.ocr_extracted_farmer_name:
+            # Priority: explicitly confirmed name > OCR-extracted name > Aadhaar name
+            if confirmed_extras and confirmed_extras.get("confirmed_name"):
+                loan.farmer_name = str(confirmed_extras["confirmed_name"])
+            elif loan_doc.ocr_extracted_farmer_name:
                 loan.farmer_name = loan_doc.ocr_extracted_farmer_name
             elif not loan.farmer_name and loan.aadhaar_verified_name:
                 loan.farmer_name = loan.aadhaar_verified_name

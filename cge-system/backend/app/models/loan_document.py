@@ -51,6 +51,7 @@ class LoanDocument(Base):
     farmer_confirmed_annual_income = Column(Float, nullable=True)
     farmer_confirmed_land_ownership = Column(Text, nullable=True)
     farmer_confirmed_loan_reason = Column(Text, nullable=True)
+    farmer_confirmed_name = Column(String(255), nullable=True)
 
     # ── OCR pipeline tracking ──
     ocr_source = Column(String(50), nullable=True)           # google_vision / paddleocr / tesseract / manual

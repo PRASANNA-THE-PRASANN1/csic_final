@@ -116,6 +116,8 @@ export default function KioskOCRConfirm() {
                 confirmed_amount: parseFloat(values.loan_amount),
                 confirmed_purpose: values.loan_reason,
                 attempt_number: attempt,
+                // Farmer-confirmed name from OCR review
+                confirmed_name: values.name || null,
                 // Structured extras
                 confirmed_account_number: values.account_number || null,
                 confirmed_ifsc: values.ifsc || null,

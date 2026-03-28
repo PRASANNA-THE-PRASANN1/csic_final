@@ -13,7 +13,7 @@ rapidfuzz>=3.0.0
 pytesseract
 Pillow
 python-multipart
-numpy
+numpy<2.0.0
 opencv-python-headless
 google-cloud-vision>=3.5.0
 twilio>=8.0.0

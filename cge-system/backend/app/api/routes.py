@@ -259,7 +259,8 @@ def get_pending_review_loans(
         "loans": [
             {
                 "loan_id": l.loan_id,
-                "farmer_name": l.aadhaar_verified_name or l.farmer_name,
+                "farmer_name": l.farmer_name or l.aadhaar_verified_name,
+                "farmer_confirmed_name": l.farmer_name,
                 "amount": l.amount,
                 "purpose": l.purpose,
                 "farmer_confirmed_amount": docs[l.loan_id].farmer_confirmed_amount if l.loan_id in docs else l.amount,
@@ -303,7 +304,8 @@ def get_review_detail(
 
     return {
         "loan_id": loan.loan_id,
-        "farmer_name": loan.aadhaar_verified_name or loan.farmer_name,
+        "farmer_name": loan.farmer_name or loan.aadhaar_verified_name,
+        "farmer_confirmed_name": loan.farmer_name,
         "amount": loan.amount,
         "purpose": loan.purpose,
         "status": loan.status,
@@ -2389,6 +2391,7 @@ def kiosk_document_confirm(
         "annual_income": data.get("confirmed_annual_income"),
         "land_ownership": data.get("confirmed_land_ownership"),
         "loan_reason": data.get("confirmed_loan_reason"),
+        "confirmed_name": data.get("confirmed_name"),
     }
 
     try:
@@ -2574,6 +2577,7 @@ def kiosk_complete(
     x_session_token: Optional[str] = Header(None),
     session_svc: KioskSessionService = Depends(get_kiosk_session_service),
     anchor_svc: KioskAnchorService = Depends(get_kiosk_anchor_service),
+    notification: NotificationService = Depends(get_notification_service),
 ):
     """Complete the kiosk session: anchor on blockchain and transition to pending_clerk_review.
     Gated on IVR confirmation — ivr_status must be 'confirmed'."""
@@ -2599,6 +2603,24 @@ def kiosk_complete(
         anchor_result = anchor_svc.anchor_kiosk_session(db, loan_id)
         # Complete and invalidate session token
         session_svc.complete_session(db, loan_id)
+
+        # Send loan_creation notification for kiosk loans (required for execution validation)
+        if loan:
+            try:
+                farmer_mobile = loan.farmer_mobile or ""
+                notification.send_loan_creation_notification(
+                    db=db,
+                    farmer_mobile=farmer_mobile,
+                    loan_details={
+                        "amount": loan.amount,
+                        "purpose": loan.purpose,
+                        "loan_id": loan_id,
+                        "branch": "DCCB Branch",
+                    },
+                )
+            except Exception as e:
+                print(f"⚠ Kiosk loan_creation notification failed: {e}")
+
         return {
             "completed": True,
             "loan_id": loan_id,
@@ -3003,7 +3025,7 @@ def kiosk_status(
         "ocr_confirmed": loan_doc.ocr_confirmed_at is not None if loan_doc else False,
         "amount": loan.amount if loan else None,
         "purpose": loan.purpose if loan else None,
-        "farmer_name": loan.aadhaar_verified_name if loan else None,
+        "farmer_name": loan.farmer_name or loan.aadhaar_verified_name if loan else None,
     }
 
 
@@ -3041,6 +3063,10 @@ def get_kiosk_evidence(
             "aadhaar_verified_name": presence.aadhaar_verified_name if presence else None,
             "aadhaar_otp_verified": presence.aadhaar_otp_verified if presence else False,
             "terms_accepted_at": presence.terms_accepted_at.isoformat() if presence and presence.terms_accepted_at else None,
+            "aadhaar_verified_at": presence.aadhaar_verified_at.isoformat() if presence and presence.aadhaar_verified_at else None,
+            "aadhaar_qr_scanned_at": presence.aadhaar_qr_scanned_at.isoformat() if presence and hasattr(presence, 'aadhaar_qr_scanned_at') and presence.aadhaar_qr_scanned_at else None,
+            "photo_captured_at": presence.photo_captured_at.isoformat() if presence and presence.photo_captured_at else None,
+            "face_match_passed": presence.face_match_passed if presence and hasattr(presence, 'face_match_passed') else None,
         } if presence else None,
         "document": {
             "document_hash": loan_doc.document_hash if loan_doc else None,
@@ -3052,11 +3078,23 @@ def get_kiosk_evidence(
             "farmer_confirmed_purpose": loan_doc.farmer_confirmed_purpose if loan_doc else None,
             "ocr_confirmation_attempts": loan_doc.ocr_confirmation_attempts if loan_doc else None,
             "employee_assistance_used": loan_doc.employee_assistance_used if loan_doc else False,
+            "ocr_confirmed_at": loan_doc.ocr_confirmed_at.isoformat() if loan_doc and loan_doc.ocr_confirmed_at else None,
+            "document_uploaded_at": loan_doc.document_uploaded_at.isoformat() if loan_doc and loan_doc.document_uploaded_at else None,
         } if loan_doc else None,
         "consent": {
             "consent_method": consent.consent_method if consent else None,
             "consented_at": consent.consented_at.isoformat() if consent and consent.consented_at else None,
         } if consent else None,
+        "ivr_consent": {
+            "ivr_status": loan.ivr_status if loan else None,
+            "ivr_confirmed_at": loan.ivr_confirmed_at.isoformat() if loan and loan.ivr_confirmed_at else None,
+            "consent_final_method": loan.consent_final_method if loan else None,
+            "consent_given_at": loan.consent_given_at.isoformat() if loan and hasattr(loan, 'consent_given_at') and loan.consent_given_at else None,
+            "ivr_window_started_at": loan.ivr_window_started_at.isoformat() if loan and loan.ivr_window_started_at else None,
+            "ivr_attempts": loan.ivr_attempts if loan else 0,
+        } if loan else None,
+        "farmer_name": loan.farmer_name if loan else None,
+        "farmer_confirmed_name": loan.farmer_name if loan else None,
         "otp_records": [
             {
                 "otp_type": r.otp_type,
@@ -3068,6 +3106,7 @@ def get_kiosk_evidence(
             for r in otp_records
         ],
         "kiosk_phase_anchor_hash": loan.kiosk_phase_anchor_hash if loan else None,
+        "kiosk_completed_at": loan.kiosk_completed_at.isoformat() if loan and loan.kiosk_completed_at else None,
         "assistance_session": loan.assistance_session if loan else False,
         "assisting_employee_name": loan.assisting_employee_name if loan else None,
         "assisting_employee_id": loan.assisting_employee_id if loan else None,

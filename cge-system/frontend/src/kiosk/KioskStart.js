@@ -41,7 +41,7 @@ export default function KioskStart() {
     return (
         <div className="kiosk-step kiosk-start">
             <div className="kiosk-start-hero">
-                <div className="kiosk-start-icon">🏧</div>
+                <div className="kiosk-start-icon">🌾</div>
                 <h2>Welcome to the Loan Application Kiosk</h2>
                 <p className="kiosk-hindi">ऋण आवेदन कियोस्क में आपका स्वागत है</p>
                 <p className="kiosk-start-desc">

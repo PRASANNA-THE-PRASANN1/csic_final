@@ -83,6 +83,7 @@ class Loan(Base):
     ivr_confirmed_at = Column(DateTime, nullable=True)
     consent_final_method = Column(String(20), nullable=True)  # ivr / sms
     ivr_window_started_at = Column(DateTime, nullable=True)  # UTC start of 60s window
+    consent_given_at = Column(DateTime, nullable=True)  # When farmer initiated consent
 
     # Relationships
     farmer_consent = relationship(
